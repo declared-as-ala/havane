@@ -1,0 +1,10 @@
+node_modules/
+scraped_data.json
+images/
+videos/
+*.log
+dist/
+.vercel
+.env
+.env.local
+.DS_Store
