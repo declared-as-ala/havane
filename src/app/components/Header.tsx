@@ -3,7 +3,7 @@ import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '@/app/context/CartContext';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import logoImage from 'figma:asset/2209120c02de48047f47195fbde1648d6ec685c9.png';
+import logoImage from '@/assets/2209120c02de48047f47195fbde1648d6ec685c9.png';
 
 export const Header = () => {
   const { getTotalItems } = useCart();

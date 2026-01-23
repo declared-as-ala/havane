@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Store, Users, Award, Heart } from 'lucide-react';
-import logoImage from 'figma:asset/2209120c02de48047f47195fbde1648d6ec685c9.png';
+import logoImage from '@/assets/2209120c02de48047f47195fbde1648d6ec685c9.png';
 
 export const About = () => {
   const values = [

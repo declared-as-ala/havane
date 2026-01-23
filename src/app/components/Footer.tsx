@@ -1,6 +1,6 @@
 import { Facebook, Instagram, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { Link } from 'react-router';
-import logoImage from 'figma:asset/2209120c02de48047f47195fbde1648d6ec685c9.png';
+import logoImage from '@/assets/2209120c02de48047f47195fbde1648d6ec685c9.png';
 
 export const Footer = () => {
   return (
