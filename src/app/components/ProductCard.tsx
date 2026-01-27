@@ -4,6 +4,7 @@ import { Post } from '@/app/data/posts';
 import { useCart } from '@/app/context/CartContext';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 
 interface ProductCardProps {
   post: Post;
@@ -13,6 +14,7 @@ interface ProductCardProps {
 export const ProductCard = ({ post, index = 0 }: ProductCardProps) => {
   const { addToCart } = useCart();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageError, setImageError] = useState(false);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ export const ProductCard = ({ post, index = 0 }: ProductCardProps) => {
   };
 
   const handleImageClick = (e: React.MouseEvent) => {
-    if (post.images.length > 1) {
+    if (post.images && post.images.length > 1) {
       e.preventDefault();
       setCurrentImageIndex((prev) => (prev + 1) % post.images.length);
     }
@@ -35,23 +37,35 @@ export const ProductCard = ({ post, index = 0 }: ProductCardProps) => {
       className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
     >
       {/* Image Container */}
-      <div className="relative overflow-hidden aspect-square bg-neutral-100 cursor-pointer" onClick={handleImageClick}>
-        <motion.img
-          key={currentImageIndex}
-          src={post.images[currentImageIndex]}
-          alt={post.text}
-          className="w-full h-full object-cover"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          whileHover={{ scale: 1.05 }}
-        />
+      <div className="relative overflow-hidden aspect-square bg-neutral-100 cursor-pointer group/image" onClick={handleImageClick}>
+        {post.images && post.images.length > 0 && post.images[currentImageIndex] ? (
+          <motion.div
+            key={currentImageIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="w-full h-full"
+          >
+            <ImageWithFallback
+              src={post.images[currentImageIndex]}
+              alt={post.text}
+              className="w-full h-full object-cover group-hover/image:scale-105 transition-transform duration-300"
+              onError={() => setImageError(true)}
+            />
+          </motion.div>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-neutral-200">
+            <div className="text-center text-neutral-400">
+              <p className="text-sm">Image non disponible</p>
+            </div>
+          </div>
+        )}
         {post.category && (
           <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-neutral-900">
             {post.category}
           </div>
         )}
-        {post.images.length > 1 && (
+        {post.images && post.images.length > 1 && (
           <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-neutral-900">
             {currentImageIndex + 1}/{post.images.length}
           </div>
